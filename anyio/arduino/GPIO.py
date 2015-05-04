@@ -8,7 +8,7 @@ DEBUG = False
 USE_EMBEDDED_PYSERIAL = True
 
 MIN_PIN = 0
-MAX_PIN = 16
+MAX_PIN = 13
 
 IN      = 0
 OUT     = 1
@@ -19,7 +19,7 @@ LOW     = 0
 
 
 # OS INTERFACE =========================================================
-
+import time
 from .. import protocol
 from .. import adaptors
 import portscan
@@ -62,7 +62,8 @@ s.stopbits = serial.STOPBITS_ONE
 s.close()
 s.port = PORT
 s.open()
-
+# Add time delay, as opening Serial will cause Arduino Uno to reset, requiring additional time to process.
+time.sleep(3)
     
 instance = protocol.GPIOClient(adaptors.SerialAdaptor(s), DEBUG)
     
