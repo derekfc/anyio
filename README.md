@@ -21,6 +21,8 @@ The two are linked together by a serial port controlled by the pyserial
 library. Calls to the anyio.GPIO methods on the host computer will 
 cause reads or writes to the GPIO pins on the arduino platform.
 
+To use anyio with Arduino Uno, please see the detailed notes at the bottom of this README.  
+
 
 In this way, it is possible to write a hardware control program on any 
 platform, that can easily be ported between different platforms 
@@ -196,3 +198,21 @@ https://github.com/sparkfun/SF32u4_boards/blob/master/driver/ProMicro.inf
 David Whale
 June 2014
 
+USE WITH ARDUINO UNO
+
+As Arduino Uno has a different digital pin structure, as well as a different way of processing Serial vs. the Pro Micro described above, modest additional / different code is required for stable, consistent performance (available via this branch).  Without this code, LED's have displayed very faintly, and often when invoked via Python programs, anyio performance has failed or degraded materially.  
+
+Note:  If uploading gpio.ino code (accessible via anyio/arduino/firmware/gpio/gpio.ino) from Arduino IDE to the Arduino Uno, you _must_ set the Baud rate in Serial Console (available via the Tools/Serial Monitor menu) to 115200 to match that in the gpio.ino (as well as the complementary Python code settings) _before_ uploading the gpio.ino sketch to the Arduion Uno. 
+
+The edits suggested in this branch were tested for appropriate Arduino Uno function with the suggested code in Chapter 5 of "Adventures in Minecraft" by David Whale and Martin O'Hanlon.
+
+When using the 7 Segment Display called for in Chapter 5 and subsequent chapters of "Adventures in Minecraft", a different pin mapping is required for the Arduino Uno relative to the numbering scheme / pin map on the Pro Micro (described in the book and included in its reference Python code).  After comparing the Pin Out diagrams of the 2 devices, the following Pin Map is suggested for Arduino Uno, which functioned well in testing:
+
+LED_PINS = [9,8,4,5,6,10,11,3]  # Use this for Arduino on PC/Mac
+
+Note:  Comparable 7 Segment Mapping = [A,B,C,D,E,F,G,DP]
+Reference the description in the book or the anyio/seg7.py program provided in the anyio directory via the Adventures in Minecraft companion website http://www.wiley.com/WileyCDA/Section/id-823690.html, which matches the order of the suggested pins above for the anode 7 segment display used in testing. 
+
+The "LED_PINS ="... code line above can be substituted in the comparable programs suggested in Chapter 5, etc. in "Adventures in Minecraft", including testDisply.py, testDisplay2.py, and detonator.py.
+
+This branch reflects code changes that should result in a performant anyio directory usable with Arduino Uno for Adventures in Minecraft.
