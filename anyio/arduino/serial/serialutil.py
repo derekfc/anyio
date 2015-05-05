@@ -237,7 +237,7 @@ class SerialBase(object):
                                         # can specify a device string, note
                                         # that this isn't portable anymore
                                         # port will be opened if one is specified
-                 baudrate=9600,         # baud rate
+                 baudrate=115200,         # baud rate
                  bytesize=EIGHTBITS,    # number of data bits
                  parity=PARITY_NONE,    # enable parity checking
                  stopbits=STOPBITS_ONE, # number of stop bits
