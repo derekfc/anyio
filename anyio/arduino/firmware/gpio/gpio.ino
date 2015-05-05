@@ -71,7 +71,7 @@
  */
 
 #define MIN_PIN 0
-#define MAX_PIN 16
+#define MAX_PIN 13
 
 /* Errors are sent back via the 'E' response. */
  
